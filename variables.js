@@ -1,3 +1,4 @@
 export const colors = {
-    primary: 'purple'
+    primary: 'purple',
+    secondary: 'teal'
 }

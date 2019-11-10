@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import * as Font from 'expo-font';
 import {AppLoading} from 'expo'; 
 import {useScreens} from 'react-native-screens';
@@ -15,8 +15,6 @@ const fetchFonts = () => {
     });
 }
 
-import Categories from './components/screens/Categories';
-
 export default function App() {
     const [isLoaded, setIsLoaded] = useState(false);
 
@@ -25,12 +23,14 @@ export default function App() {
             <AppLoading 
                 startAsync={fetchFonts} 
                 onFinish={() => setIsLoaded(true)} 
+                onError={err => console.log(err)}
             />
         )
 
     }
 
     return (
+
         <View style={{flex: 1}}>
             <MealsNavigator />
         </View>

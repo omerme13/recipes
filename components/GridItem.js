@@ -11,7 +11,7 @@ import {
 const gridItem = props => {
     const { id, title, color } = props.item;
     let TouchableComponent = TouchableOpacity;
-    console.log(Platform)
+    
     if (Platform.OS === 'android' && Platform.Version > 20) {
         TouchableComponent = TouchableNativeFeedback;
     }
@@ -43,7 +43,10 @@ const styles = StyleSheet.create({
         margin: 15,
         height: 150,
         borderRadius: 10,
-        overflow: 'hidden'
+        overflow: Platform.OS === 'android' && Platform.Version > 20 
+            ? 'hidden' 
+            : 'auto',
+        elevation: 5
     },
     container: {
         flex: 1,
@@ -52,7 +55,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 10,
-        elevation: 3,
         justifyContent: "flex-end",
         alignItems: "flex-end",
         padding: 15,

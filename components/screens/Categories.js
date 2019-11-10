@@ -1,7 +1,10 @@
 import React from 'react';
-import {StyleSheet, FlatList} from 'react-native';
+import { FlatList} from 'react-native';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 import GridItem from '../GridItem';
+import HeaderButton from '../HeaderButton';
+
 import {CATEGORIES} from '../../data/data';
 
 const categories = props => {
@@ -22,17 +25,19 @@ const categories = props => {
     );
 }
 
-categories.navigationOptions = {
-    headerTitle: 'Meal Categories'
+categories.navigationOptions = navData => {
+    return {
+        headerTitle: 'Meal Categories',
+        headerLeft: (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                    title="hamburger"
+                    iconName="ios-menu"
+                    onPress={() => navData.navigation.toggleDrawer()}
+                />
+            </HeaderButtons>
+        )
+    }
 }
-
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-
-});
 
 export default categories;
