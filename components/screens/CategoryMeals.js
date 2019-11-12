@@ -1,21 +1,37 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { View, StyleSheet } from 'react-native';
 
 import MealList from '../MealList';
-import { CATEGORIES, MEALS } from "../../data/data";
+import StyledText from '../StyledText';
+import { CATEGORIES } from "../../data/data";
 
 const categoryMeals = props => {
+    const availableMeals = useSelector(state => state.meals.filteredMeals);
 
     const categoryId = props.navigation.getParam('id');
-    const relevantMeals = MEALS.filter(meal => (
-        meal.categoryIds.indexOf(categoryId) > -1)
+    const relevantMeals = availableMeals.filter(meal => (
+        meal.categoryIds.indexOf(categoryId) > -1  
+    )) 
+
+    let content = (
+        <View style={styles.screen}>
+            <StyledText type="title">
+                There are no meals for your preference
+            </StyledText>
+        </View>
     ) 
 
-    return(
-        <MealList 
-            data={relevantMeals}
-            navigation={props.navigation}
-        />
-    );
+    if (relevantMeals.length) {
+        content = (
+            <MealList 
+                data={relevantMeals}
+                navigation={props.navigation}
+            />
+        );
+    }
+    
+    return content;
 }
 
 categoryMeals.navigationOptions = navigationData => {
@@ -27,5 +43,11 @@ categoryMeals.navigationOptions = navigationData => {
     }
 }
 
+const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        justifyContent: "center"
+    }
+});
 
 export default categoryMeals;

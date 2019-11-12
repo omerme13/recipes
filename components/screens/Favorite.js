@@ -1,20 +1,34 @@
 import React from 'react';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import { useSelector } from 'react-redux';
+import { View, StyleSheet } from 'react-native';
 
 import MealList from '../MealList';
 import HeaderButton from '../HeaderButton';
-
-import { MEALS } from '../../data/data';
+import StyledText from '../StyledText';
 
 const favorite = props => {
-    const favoriteMeals = MEALS.filter(meal => meal.id === 'm1');
+    const favoriteMeals = useSelector(state => state.meals.favoriteMeals);
+
+    let content = (
+        <View style={styles.screen}>
+            <StyledText type="title">
+                There are no favorites yet...
+            </StyledText>
+        </View>
+    ) 
+
+    if (favoriteMeals.length) {
+        content = (
+            <MealList
+                data={favoriteMeals}
+                navigation={props.navigation}
+            />
+        );
+    }
+
+    return content;
     
-    return(
-        <MealList
-            data={favoriteMeals}
-            navigation={props.navigation}
-        />
-    );
 }
 
 favorite.navigationOptions = navData => {
@@ -32,5 +46,11 @@ favorite.navigationOptions = navData => {
     }
 }
 
+const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+        justifyContent: "center"
+    }
+});
 
 export default favorite;
